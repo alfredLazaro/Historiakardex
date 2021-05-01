@@ -7,7 +7,7 @@ package BaseDeDatos;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java. util. Date;
 /**
  *
  * @author javier
@@ -32,7 +32,7 @@ public class ConsultasBD {
                 res= true;
             }
         }catch(SQLException e){
-            System.out.append(e.toString() +"linea 35 CosultaBD");
+            System.out.append(e.toString());
         }
         
         return res;
@@ -73,27 +73,27 @@ public class ConsultasBD {
                         + " codSis IN ("
                             + " SELECT codSis "
                             + " FROM Umss.dbo.Inscripciones "
-                            + " WHERE codSis="+codSis+
-                            ")";
+                            + " WHERE codSis="+codSis 
+                    +"and gestionInscrip='"+gestion +"'"+")";
             ResultSet resultado = sql.executeQuery(consulta);
             if(resultado.next()){
                 res= true;
             }
         }catch(SQLException e){
-            System.out.append(e.toString()+"linea 83 CosultaBD");
+            System.out.append(e.toString());
         }
         
         return res;
     }
     
-    //de que tipo sera la solicitud?
-    //
     public static void registroDeNuevaSolicitud(int codSis,String motivo,
-            String fecha){
+            String fechaEnvio, String carrera, String estado){
+        
        try{
            Statement sql = ConexionSQL.getConnetion().createStatement();
            String update="INSERT INTO Umss.dbo.Formulario "
-                   + " VALUES ("+codSis +",'"+ motivo +"','"+ fecha +"')";
+                   + " VALUES ("+ codSis +",'"+ motivo +"','"+ fechaEnvio +"'"
+                   + ",'"+ carrera +"','"+ estado +"')";
                    
            sql.execute(update);
            
@@ -102,33 +102,121 @@ public class ConsultasBD {
        }
     
     }
-    //La carrera falta poner,
     
-    public static String respuestaAlaSolicitud(int codSis,String carrera,String gestion){
-        String res="La solicitud realizada no puede ser cumplida";
+    public static boolean validarContraseniaAdmi(int codAd,String contraAdmin){
+        boolean res=false;
         try{
             Statement sql=ConexionSQL.getConnetion().createStatement();
-            String consulta=
-                    "  SELECT COUNT(e.codSis)as nro,gestion,n.codMat,nombMat,calif "
-                    +" FROM Estudiante e,Materia m,Nota n "
-                    +" WHERE e.codSis=n.codSis and m.codMat=n.codMat and " 
-                    +   " e.codSis="+codSis +"and gestion='"+gestion+"' "
-                    //+   "and carrera='"+carrera+"' "
-                    +" GROUP BY e.codSis,gestion,n.codMat,nombMat,calif";
-            //sql.execute(consulta);
-            
-            ResultSet resultado = sql.executeQuery(consulta);
+            String validacion="select * from Administrador \n" +
+                   "WHERE codAd="+ codAd +" and contraAdmin='"+contraAdmin+"'";
+            ResultSet resultado=sql.executeQuery(validacion);
             if(resultado.next()){
-                res="nro  gestion  codMat    nombMat      calif" +"\n"
-                        +resultado.getString(1) +"    |"+ resultado.getString(2) 
-                        + "      |"+resultado.getString(3)+"      |"+resultado.getString(4)
-                        +"|"+resultado.getString(5) + "\n";
+                res=true;
             }
-            
         }catch(Exception e){
             System.out.println(e.toString());
         }
         
+        return res;
+    }
+    
+    
+    public static boolean validarContraseniaEst(int codSis,String contraEst){
+        boolean res=false;
+        try{
+            Statement sql=ConexionSQL.getConnetion().createStatement();
+            String validacion="select codSis from Umss.dbo.Estudiante\n" +
+                   "WHERE codSis="+ codSis +" and contraEst='"+ contraEst +"'";
+            
+            ResultSet resultado=sql.executeQuery(validacion);
+            if(resultado.next()){
+                res=true;
+            }
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+        
+        
+        return res;
+    }
+    //el estado 1 es que fue aceptado
+    //el estado 2 es que no lo fue
+    //el estado diferente de 1 y 2 esta en espera
+    public static void actualizarEstadoFormulario(int codSis, int estado){
+        try{
+            String esta="";
+            if(estado==1){
+                esta="esAceptado";
+            }else{
+                if(estado==0){
+                    esta="noAceptado";
+                }else{
+                    esta="enProceso";
+                }
+            }
+            Statement sql=ConexionSQL.getConnetion().createStatement();
+            String update=
+                "update Umss.dbo.Formulario set esAceptada='"+esta +"' "
+                + " where codSis="+ codSis;
+            
+            ResultSet res=sql.executeQuery(update);
+            
+        }catch(Exception e){
+            System.out.print(e.toString());
+        }
+    }
+    
+    private static boolean consultaEstado(int codSis){
+        boolean res=false;
+        try {
+            Statement sql=ConexionSQL.getConnetion().createStatement();
+                String consulta="SELECT * FROM Umss.dbo.Formulario"
+                        + " WHERE codSis="+ codSis +"and esAceptada= 'esAceptado'";
+                
+                ResultSet respuesta=sql.executeQuery(consulta);
+                
+                if(respuesta.next()){
+                    res=true;  
+                }
+        }catch(Exception e){
+            System.out.print(e.toString());
+        }
+        return res;
+    }
+    
+    public static String respuestaAlaSolicitud(int codSis){
+       
+        String res="La solicitud realizada no puede ser cumplida";
+        if(consultaEstado(codSis)){
+            try{
+                Statement sql=ConexionSQL.getConnetion().createStatement();
+                String consulta=
+                "SELECT COUNT(e.codSis)as nro,gestion,n.codMat,nombMat,calif"
+                    + " FROM Umss.dbo.Estudiante e,Umss.dbo.Materia m,"
+                        + "Umss.dbo.Nota n , Umss.dbo.carrera c "
+                    + " WHERE e.codSis=n.codSis and m.codMat=n.codMat and"
+                    + " e.codSis=c.codSis "
+                    + " and nomCarrera=(SELECT carrera"
+                                    + " FROM Formulario where c.codSis="+codSis+")"
+                   +  "GROUP BY e.codSis,gestion,n.codMat,nombMat,calif ";
+
+                ResultSet resultado = sql.executeQuery(consulta);
+                
+                if(resultado.next()){
+                    System.out.print(resultado.toString());
+                    res="nro  gestion  codMat    nombMat      calif" +"\n"
+                            +resultado.getString(1) +"    |"+ resultado.getString(2) 
+                            + "      |"+resultado.getString(3)+"      |"+resultado.getString(4)
+                            +"|"+resultado.getString(5) + "\n";
+                }
+
+            }catch(Exception e){
+                System.out.println(e.toString());
+            }
+        }else{
+            res="no puede obtener el Kardex"
+                    + "debido a que no fue evaluada su solicitud aun.";
+        }
         return res;
     }
     
