@@ -89,9 +89,9 @@ public class IngresoPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
-        InsgresoAdmin admin = new InsgresoAdmin();
-        admin.setVisible(true);
-        this.setVisible(false);
+//        InsgresoAdmin admin = new InsgresoAdmin();
+//        admin.setVisible(true);
+//        this.setVisible(false);
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstudianteActionPerformed
