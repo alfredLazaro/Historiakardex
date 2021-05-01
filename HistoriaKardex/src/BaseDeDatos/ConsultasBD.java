@@ -98,13 +98,36 @@ public class ConsultasBD {
            sql.execute(update);
            
        }catch(SQLException e){
-           System.out.print(e.toString()+"en la linea 101 ");
+           System.out.print(e.toString());
        }
     
     }
-    //dar la solicitud deseada
-    public static boolean respuestaAlaSolicitud(){
-        boolean res=false;
+    //La carrera falta poner,
+    
+    public static String respuestaAlaSolicitud(int codSis,String carrera,String gestion){
+        String res="La solicitud realizada no puede ser cumplida";
+        try{
+            Statement sql=ConexionSQL.getConnetion().createStatement();
+            String consulta=
+                    "  SELECT COUNT(e.codSis)as nro,gestion,n.codMat,nombMat,calif "
+                    +" FROM Estudiante e,Materia m,Nota n "
+                    +" WHERE e.codSis=n.codSis and m.codMat=n.codMat and " 
+                    +   " e.codSis="+codSis +"and gestion='"+gestion+"' "
+                    //+   "and carrera='"+carrera+"' "
+                    +" GROUP BY e.codSis,gestion,n.codMat,nombMat,calif";
+            //sql.execute(consulta);
+            
+            ResultSet resultado = sql.executeQuery(consulta);
+            if(resultado.next()){
+                res="nro  gestion  codMat    nombMat      calif" +"\n"
+                        +resultado.getString(1) +"    |"+ resultado.getString(2) 
+                        + "      |"+resultado.getString(3)+"      |"+resultado.getString(4)
+                        +"|"+resultado.getString(5) + "\n";
+            }
+            
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
         
         return res;
     }
