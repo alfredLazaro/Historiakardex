@@ -11,11 +11,13 @@ package historiakardex;
  */
 public class HistoriaKardex {
 
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        
     }
     
 }
