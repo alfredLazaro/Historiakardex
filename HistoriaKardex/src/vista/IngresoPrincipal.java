@@ -11,9 +11,8 @@ package vista;
  */
 public class IngresoPrincipal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form IngresoPrincipal
-     */
+    InsgresoAdmin administrador;
+    Solicitud     solicitud;
     public IngresoPrincipal() {
         initComponents();
     }
@@ -27,15 +26,15 @@ public class IngresoPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jlblTitulo = new javax.swing.JLabel();
         btnEstudiante = new javax.swing.JButton();
         btnAdmin = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        jlblInstruccion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel1.setText("Bienvenido al Registro de Solicitudes");
+        jlblTitulo.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jlblTitulo.setText("Bienvenido al Registro de Solicitudes");
 
         btnEstudiante.setText("Estudiante");
         btnEstudiante.addActionListener(new java.awt.event.ActionListener() {
@@ -51,8 +50,8 @@ public class IngresoPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel2.setText("Eliga la opcion que requiera:");
+        jlblInstruccion.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jlblInstruccion.setText("Eliga la opcion que requiera:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -61,23 +60,23 @@ public class IngresoPrincipal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(72, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
+                    .addComponent(jlblInstruccion)
+                    .addComponent(jlblTitulo))
                 .addGap(61, 61, 61))
             .addGroup(layout.createSequentialGroup()
                 .addGap(175, 175, 175)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAdmin))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addComponent(jLabel1)
+                .addComponent(jlblTitulo)
                 .addGap(35, 35, 35)
-                .addComponent(jLabel2)
+                .addComponent(jlblInstruccion)
                 .addGap(18, 18, 18)
                 .addComponent(btnEstudiante)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -138,7 +137,7 @@ public class IngresoPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdmin;
     private javax.swing.JButton btnEstudiante;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jlblInstruccion;
+    private javax.swing.JLabel jlblTitulo;
     // End of variables declaration//GEN-END:variables
 }
