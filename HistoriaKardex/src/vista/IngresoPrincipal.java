@@ -15,6 +15,7 @@ public class IngresoPrincipal extends javax.swing.JFrame {
     Solicitud     solicitud;
     public IngresoPrincipal() {
         initComponents();
+        this.setResizable(false);
     }
 
     /**
@@ -32,6 +33,7 @@ public class IngresoPrincipal extends javax.swing.JFrame {
         jlblInstruccion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(100, 100));
 
         jlblTitulo.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jlblTitulo.setText("Bienvenido al Registro de Solicitudes");

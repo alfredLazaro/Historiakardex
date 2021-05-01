@@ -5,6 +5,9 @@
  */
 package vista;
 
+import BaseDeDatos.ConsultasBD;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Alfredo
@@ -12,9 +15,11 @@ package vista;
 public class InsgresoAdmin extends javax.swing.JFrame {
 
     MuestraSolicitudes muestraSol;
+    ConsultasBD consultaBD;
     public InsgresoAdmin() {
         initComponents();
         //IngresoAdmin.set
+        this.setResizable(false);
     }
 
     /**
@@ -39,6 +44,7 @@ public class InsgresoAdmin extends javax.swing.JFrame {
         jpaswContraAdmin = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(100, 100));
 
         jlblIngresoAd.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jlblIngresoAd.setText("Ingreso Administrador");
@@ -61,8 +67,18 @@ public class InsgresoAdmin extends javax.swing.JFrame {
         );
 
         jbtnIngresar.setText("ingresar");
+        jbtnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnIngresarActionPerformed(evt);
+            }
+        });
 
         jbtnCancelar.setText("cancelar");
+        jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -82,7 +98,7 @@ public class InsgresoAdmin extends javax.swing.JFrame {
                 .addComponent(jbtnIngresar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbtnCancelar)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel3.setText("codAdminitrador:");
@@ -124,7 +140,7 @@ public class InsgresoAdmin extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jpaswContraAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -141,9 +157,9 @@ public class InsgresoAdmin extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -160,7 +176,7 @@ public class InsgresoAdmin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -170,6 +186,28 @@ public class InsgresoAdmin extends javax.swing.JFrame {
     private void jpaswContraAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpaswContraAdminActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jpaswContraAdminActionPerformed
+
+    private void jbtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnIngresarActionPerformed
+        consultaBD =new ConsultasBD();
+        int codAd=Integer.parseInt(jtxtCodAdmin.getText());
+        String contraAd=String.valueOf(jpaswContraAdmin.getPassword());
+        if(evt.getSource()==jbtnIngresar){
+            if(consultaBD.validarContraseniaAdmi(codAd, contraAd)){
+            muestraSol=new MuestraSolicitudes();
+            muestraSol.setVisible(true);
+            this.setVisible(false);
+            }else{
+            JOptionPane.showMessageDialog(this, "el administrador no exite");
+            }
+        }else{}
+        
+    }//GEN-LAST:event_jbtnIngresarActionPerformed
+
+    private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
+        if(evt.getSource()==jbtnCancelar){
+            this.dispose();
+        }else{}
+    }//GEN-LAST:event_jbtnCancelarActionPerformed
 
     /**
      * @param args the command line arguments

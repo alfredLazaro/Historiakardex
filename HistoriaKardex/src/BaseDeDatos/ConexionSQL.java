@@ -17,14 +17,16 @@ public class ConexionSQL {
     public static Connection getConnetion(){
         String conexionURL = "jdbc:sqlserver://localhost:1433;"
                 + "database=Umss;" 
-                + "user=sa;"
-                + "password=javier2Javier!;" //contraseña de usuario sa
+                + "user=alfred;"
+                + "password=alfred123;" //contraseña de usuario sa
                 + "loginTimeout=30;";
         try{
             Connection con = DriverManager.getConnection(conexionURL);
+            System.out.println("se conecto");
             return con;
         }catch(SQLException ex){
             System.out.println(ex.toString());
+            System.out.println("no se llego a conectar");
             return null;
         }
     }

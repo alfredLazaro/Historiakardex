@@ -9,6 +9,7 @@ import BaseDeDatos.ConsultasBD;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,6 +20,7 @@ public class Solicitud extends javax.swing.JFrame {
     LlenadoSolicitud llenadoS;
     public Solicitud() {
         initComponents();
+        this.setResizable(false);
     }
 
     /**
@@ -60,6 +62,7 @@ public class Solicitud extends javax.swing.JFrame {
         jCheckBoxMenuItem4.setText("jCheckBoxMenuItem4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(150, 100));
 
         jlblTitulo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jlblTitulo.setText("solicitud para kardex legalizado");
@@ -223,16 +226,14 @@ public class Solicitud extends javax.swing.JFrame {
     private void jbtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnIngresarActionPerformed
         consulta= new ConsultasBD();
         int codS=Integer.parseInt(jtxtCodSis.getText());
-        String contra=jpswdContra.getSelectedText();
+        String contra=String.valueOf(jpswdContra.getPassword());
         if(evt.getSource()==jbtnIngresar){
-            try {
-                if(consulta.existeEstudiante(codS)){
-                    llenadoS=new LlenadoSolicitud();
-                    llenadoS.setVisible(true);
-                    this.setVisible(false);
-                }else{}
-            } catch (SQLException ex) {
-                Logger.getLogger(Solicitud.class.getName()).log(Level.SEVERE, null, ex);
+            if(consulta.validarContraseniaEst(codS, contra) && jchekConfirm.isSelected()){
+                llenadoS=new LlenadoSolicitud();
+                llenadoS.setVisible(true);
+                this.setVisible(false);
+            }else{
+                JOptionPane.showMessageDialog(this, "el estudiante no esta registrado");
             }
         }else{}
     }//GEN-LAST:event_jbtnIngresarActionPerformed
@@ -246,7 +247,9 @@ public class Solicitud extends javax.swing.JFrame {
     }//GEN-LAST:event_jchekConfirmActionPerformed
 
     private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
-        // TODO add your handling code here:
+        if(evt.getSource()==jbtnCancelar){
+            this.dispose();
+        }else{}
     }//GEN-LAST:event_jbtnCancelarActionPerformed
 
     /**
