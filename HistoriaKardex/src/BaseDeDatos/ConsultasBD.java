@@ -7,7 +7,7 @@ package BaseDeDatos;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java. util. Date;
 /**
  *
  * @author javier
@@ -90,6 +90,8 @@ public class ConsultasBD {
     //
     public static void registroDeNuevaSolicitud(int codSis,String motivo,
             String fecha){
+        
+        
        try{
            Statement sql = ConexionSQL.getConnetion().createStatement();
            String update="INSERT INTO Umss.dbo.Formulario "
@@ -103,6 +105,43 @@ public class ConsultasBD {
     
     }
     //La carrera falta poner,
+    
+    public static boolean validarContraseniaAdmi(int codAd,String contraAdmin){
+        boolean res=false;
+        try{
+            Statement sql=ConexionSQL.getConnetion().createStatement();
+            String validacion="select * from Administrador \n" +
+                   "WHERE codAd="+ codAd +" and contraAdmin='"+contraAdmin+"'";
+            ResultSet resultado=sql.executeQuery(validacion);
+            if(resultado.next()){
+                res=true;
+            }
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+        
+        return res;
+    }
+    
+    
+    public static boolean validarContraseniaEst(int codSis,String contraEst){
+        boolean res=false;
+        try{
+            Statement sql=ConexionSQL.getConnetion().createStatement();
+            String validacion="select codSis from Estudiante\n" +
+                   "WHERE codSis="+ codSis +" and contraEst='"+ contraEst +"'";
+            
+            ResultSet resultado=sql.executeQuery(validacion);
+            if(resultado.next()){
+                res=true;
+            }
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+        
+        
+        return res;
+    }
     
     public static String respuestaAlaSolicitud(int codSis,String carrera,String gestion){
         String res="La solicitud realizada no puede ser cumplida";
