@@ -104,7 +104,6 @@ INSERT INTO Inscripciones([gestionInscrip],[pago]) VALUES('II19',0),('I20',0),('
 INSERT INTO Inscripciones([gestionInscrip],[pago]) VALUES('I20',0),('I20',0),('II19',0),('I20',0),('II20',0),('II20',0),('II19',0),('I20',0),('I20',0),('II19',0);
 INSERT INTO Inscripciones([gestionInscrip],[pago]) VALUES('II20',0),('I20',0),('I20',0),('II19',0),('II20',0),('II19',0),('II20',0),('II20',0),('II20',0),('II20',0);
 
-create table 
 
 
 --tabla materia
