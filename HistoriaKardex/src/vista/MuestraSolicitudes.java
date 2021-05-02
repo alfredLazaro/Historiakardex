@@ -6,6 +6,7 @@
 package vista;
 
 import BaseDeDatos.ConsultasBD;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -31,7 +32,7 @@ public class MuestraSolicitudes extends javax.swing.JFrame {
             @Override
             public void valueChanged(ListSelectionEvent lse) {
                 String actual=jlistSolicituds.getSelectedValue();
-                System.out.println("actual"+actual);
+                //System.out.println("actual"+actual);
                 txtFiecodSoli.setText(actual);
             }
         });
@@ -134,7 +135,7 @@ public class MuestraSolicitudes extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jlistSolicituds);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel3.setText("Codigo de Solicitud:");
+        jLabel3.setText("CodSis de Solicitante:");
 
         txtFiecodSoli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,9 +174,9 @@ public class MuestraSolicitudes extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
-                                .addGap(10, 10, 10)
-                                .addComponent(txtFiecodSoli, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(27, 27, 27)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtFiecodSoli, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnRevisar)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -232,12 +233,12 @@ public class MuestraSolicitudes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtFie_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addComponent(txtFie_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtFie_carrera, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addComponent(txtFie_carrera, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 448, Short.MAX_VALUE)
                 .addContainerGap())
@@ -263,12 +264,26 @@ public class MuestraSolicitudes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDenegarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDenegarActionPerformed
-        
+       consult.actualizarEstadoFormulario(Integer.parseInt(txtFiecodSoli.getText()), 1);
+       removerSol();
         vaciarInfo();
     }//GEN-LAST:event_btnDenegarActionPerformed
-
+    public void removerSol(){
+        DefaultListModel modelo=(DefaultListModel) jlistSolicituds.getModel();
+        modelo.remove(jlistSolicituds.getSelectedIndex());
+    }
     private void btnRevisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevisarActionPerformed
         int codSis = Integer.parseInt(txtFiecodSoli.getText());
+        if(consult.existeEstudiante(codSis)){
+            ArrayList<String> datos=consult.mostrarSolicitud(codSis);
+            if(datos.size()>=1){
+                txtArea_motivo.setText(datos.get(0));
+                txtFie_nomb.setText(datos.get(1)+" "+datos.get(2)+" "+datos.get(3));
+                txtFie_fecha.setText(datos.get(4));
+                txtFie_carrera.setText(datos.get(5));
+            }else{}
+            
+        }else{}
         
     }//GEN-LAST:event_btnRevisarActionPerformed
 
@@ -277,8 +292,10 @@ public class MuestraSolicitudes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFiecodSoliActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        consult.actualizarEstadoFormulario(Integer.parseInt(txtFiecodSoli.getText()), 1);
         
         vaciarInfo();
+        removerSol();
     }//GEN-LAST:event_btnAceptarActionPerformed
     
     private void vaciarInfo(){
@@ -351,13 +368,11 @@ public class MuestraSolicitudes extends javax.swing.JFrame {
 
     private void llenarJList() {
         DefaultListModel modelo=new DefaultListModel();
-       String codigs=consult.devolCodSisSolicitantes();
-        System.out.println(codigs);
+       ArrayList<String> codigs=consult.devolCodSisSolicitantes();
         modelo =(DefaultListModel) jlistSolicituds.getModel();
-        modelo.addElement(codigs);
-        
-        
-        
+        for(int i=0;i<codigs.size();i++){
+            modelo.addElement(codigs.get(i));
+        }
     }
     
     private DefaultListModel limpiarList(){

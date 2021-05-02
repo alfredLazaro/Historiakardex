@@ -227,23 +227,59 @@ public class ConsultasBD {
     }
     
     //todavia esta a prueba
-    public static String devolCodSisSolicitantes(){
-        String res="no devuelve";
+    public static ArrayList<String> devolCodSisSolicitantes(){
+        ArrayList<String> res=new ArrayList<>();
         try{
                 Statement sql=ConexionSQL.getConnetion().createStatement();
                 String consulta=
-                "SELECT codSis from Formulario";
+                "SELECT codSis from Formulario "
+                        + "where esAceptada='enProceso'";
 
                 ResultSet resultado = sql.executeQuery(consulta);
                 
-                if(resultado.next()){
+                while(resultado.next()){
                     System.out.print(resultado.toString());
-                    res=resultado.getString(1)+"";
+                    res.add(resultado.getString(1));
                 }
-                System.out.println(res);
+                
             }catch(Exception e){
                 System.out.println(e.toString());
             }
         return res;
+    }
+    
+    public static ArrayList<String> mostrarSolicitud(int codSis){
+        ArrayList<String> datos=new ArrayList<String>();
+        try{
+                Statement sql=ConexionSQL.getConnetion().createStatement();
+                String consulta="select motivo,nomEst,apPat,apMat,fechRegist,nomCarrera "+
+                        "from Formulario as f,Estudiante as e,carrera c "+
+                        " where f.codSis=e.codSis and c.codSis=f.codSis and carrera=("+
+                        "select carrera "+
+                        "from formulario "+
+                        "where " +
+                         "codSis="+codSis+")";
+                
+                
+                ResultSet resultado = sql.executeQuery(consulta);
+                
+                if(resultado.next()){
+                    System.out.print(resultado.toString());
+                    datos.add(resultado.getString(1));
+                    System.out.println(datos.get(0) + ""+datos.size());
+                    datos.add(resultado.getString(2));
+                    System.out.println(datos.get(1) + ""+datos.size());
+                    datos.add(resultado.getString(3));
+                    System.out.println(datos.get(2) + ""+datos.size());
+                    datos.add(resultado.getString(4));
+                    
+                    datos.add(resultado.getString(5));
+                    datos.add(resultado.getString(6));
+                    System.out.println(datos + ""+datos.size());
+                }
+            }catch(Exception e){
+                System.out.println(e.toString());
+            }
+        return datos;
     }
 }
