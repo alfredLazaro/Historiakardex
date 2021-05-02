@@ -7,7 +7,7 @@ package BaseDeDatos;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java. util. Date;
+import java.util.Date;
 /**
  *
  * @author javier
@@ -92,7 +92,7 @@ public class ConsultasBD {
        try{
            Statement sql = ConexionSQL.getConnetion().createStatement();
            String update="INSERT INTO Umss.dbo.Formulario "
-                   + " VALUES ("+ codSis +",'"+ motivo +"','"+ fechaEnvio +"'"
+                   + " VALUES ("+ codSis +",'"+ motivo +"','"+ fechaEnvio+"'" 
                    + ",'"+ carrera +"','"+ estado +"')";
                    
            sql.execute(update);
