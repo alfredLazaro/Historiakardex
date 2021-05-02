@@ -185,7 +185,7 @@ public class ConsultasBD {
     }
     
     public static String respuestaAlaSolicitud(int codSis){
-       
+    //este metodo devuelve el kardex   
         String res="La solicitud realizada no puede ser cumplida";
         if(consultaEstado(codSis)){
             try{
@@ -220,6 +220,24 @@ public class ConsultasBD {
         return res;
     }
     
-    
-    
+    //todavia esta a prueba
+    public static String devolCodSisSolicitantes(){
+        String res="no devuelve";
+        try{
+                Statement sql=ConexionSQL.getConnetion().createStatement();
+                String consulta=
+                "SELECT codSis from Formulario";
+
+                ResultSet resultado = sql.executeQuery(consulta);
+                
+                if(resultado.next()){
+                    System.out.print(resultado.toString());
+                    res=resultado.getString(1)+"";
+                }
+                System.out.println(res);
+            }catch(Exception e){
+                System.out.println(e.toString());
+            }
+        return res;
+    }
 }

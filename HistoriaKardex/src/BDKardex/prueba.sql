@@ -155,6 +155,7 @@ CREATE TABLE Formulario(
  constraint FK_Formulario_CODSIS foreign key(codSis) references estudiante (codSis)
 
 )
+select codSis from Formulario
 
 IF EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('carrera'))
 BEGIN;

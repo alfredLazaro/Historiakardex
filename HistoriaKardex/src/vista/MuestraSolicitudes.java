@@ -5,21 +5,23 @@
  */
 package vista;
 
+import BaseDeDatos.ConsultasBD;
+
 /**
  *
  * @author USUARIO
  */
 public class MuestraSolicitudes extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MuestraSolicitudes
-     */
+    ConsultasBD consult;
     public MuestraSolicitudes() {
+        consult=new ConsultasBD();
         initComponents();
         txtArea_motivo.setEditable(false);
         txtFie_carrera.setEditable(false);
         txtFie_fecha.setEditable(false);
         txtFie_nomb.setEditable(false);
+        llenarJList();
     }
 
     /**
@@ -224,7 +226,7 @@ public class MuestraSolicitudes extends javax.swing.JFrame {
                 .addComponent(txtFie_carrera, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(35, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 448, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -333,4 +335,9 @@ public class MuestraSolicitudes extends javax.swing.JFrame {
     private javax.swing.JTextField txtFie_nomb;
     private javax.swing.JTextField txtFiecodSoli;
     // End of variables declaration//GEN-END:variables
+
+    private void llenarJList() {
+       String codigs=consult.devolCodSisSolicitantes();
+        System.out.println(codigs);
+    }
 }
