@@ -200,7 +200,7 @@ public class LlenadoSolicitud extends javax.swing.JFrame {
                 codSis = Integer.parseInt(txtFie_codSis.getText());
                 motivo = txtArea_motivo.getText();
                 carrera = txtFie_carrera.getText();
-                estado = "en espera";
+                estado = "enProceso";
                 conexion.registroDeNuevaSolicitud(codSis, motivo, fecha, carrera, estado);
                 JOptionPane.showMessageDialog(null, "Registro realizado exitosamente");
                 vaciarDatos();
