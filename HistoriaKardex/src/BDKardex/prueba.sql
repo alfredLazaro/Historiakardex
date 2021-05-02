@@ -155,6 +155,8 @@ CREATE TABLE Formulario(
  constraint FK_Formulario_CODSIS foreign key(codSis) references estudiante (codSis)
 
 )
+select * from formulario
+select codSis from Formulario
 
 IF EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('carrera'))
 BEGIN;
@@ -172,7 +174,7 @@ CREATE TABLE [carrera] (
 GO
 
 
-INSERT INTO carrera([codSis],[nomCarrera]) VALUES(200022009,'Tecnico Universitario Superior en Quimica Industrial'),(200022011,'Tecnico Universitario Superior en Mecanica Automotriz'),(200022013,'Tecnico Superior Forestal'),(200022015,'Ingenieria Civil'),(200022017,'Ingenieria Quimica'),(200022019,'Ingenieria Mecanica'),(200022021,'Licenciatura en Sociologia'),(200022023,'Licenciatura en Ingenieria Agroindustrial'),(200022025,'Licenciatura en Psicologia'),(200022027,'Licenciatura en Ingenieria Agronomica Fitotecnista');
+INSERT INTO carrera([codSis],[nomCarrera]) VALUES(200022009,'200022009'),(200022011,'Tecnico Universitario Superior en Mecanica Automotriz'),(200022013,'Tecnico Superior Forestal'),(200022015,'Ingenieria Civil'),(200022017,'Ingenieria Quimica'),(200022019,'Ingenieria Mecanica'),(200022021,'Licenciatura en Sociologia'),(200022023,'Licenciatura en Ingenieria Agroindustrial'),(200022025,'Licenciatura en Psicologia'),(200022027,'Licenciatura en Ingenieria Agronomica Fitotecnista');
 INSERT INTO carrera([codSis],[nomCarrera]) VALUES(200022029,'Licenciatura en Ingenieria Agronomica Fitotecnista'),(200022031,'Programa de Licenciatura Especial en Educacion Intercultural Bilingue'),(200022033,'Tecnico Universitario Superior en Construcciones'),(200022035,'Ingenieria Matematica'),(200022037,'Ingenieria Electrica'),(200022039,'Licenciatura en Ingenieria Agronomica Zootecnista'),(200022041,'Licenciatura en Sociologia'),(200022043,'Licenciatura en Diseno Grafico y Comunicacion Visual'),(200022045,'Tecnico Universitario Superior en Construcciones'),(200022047,'Licenciatura en Comunicacion Social');
 INSERT INTO carrera([codSis],[nomCarrera]) VALUES(200022049,'Ingenieria Electrica'),(200022051,'Licenciatura en Ingenieria Agronomica'),(200022053,'Licenciatura en Quimica'),(200022055,'Licenciatura en Ciencias Juridicas'),(200022057,'Licenciatura en Trabajo Social'),(200022059,'Ingenieria de Sistemas'),(200022061,'Tecnico Universitario Superior en Construcciones'),(200022063,'Licenciatura en Ingenieria Ambiental'),(200022065,'Licenciatura en Didactica de la Fisica'),(200022067,'Licenciatura en Contaduria Publica');
 INSERT INTO carrera([codSis],[nomCarrera]) VALUES(200022069,'Licenciatura en Ingenieria Forestal'),(200022071,'Ingenieria Electronica'),(200022073,'Licenciatura en Ingenieria Financiera'),(200022075,'Ingenieria Electromecanica'),(200022077,'Ingenieria Electromecanica'),(200022079,'Ingenieria de Alimentos'),(200022081,'Tecnico Superior Forestal'),(200022083,'Licenciatura en Administracion de Empresas'),(200022085,'Licenciatura en Ingenieria Agricola'),(200022087,'Licenciatura en Ciencias Juridicas');
