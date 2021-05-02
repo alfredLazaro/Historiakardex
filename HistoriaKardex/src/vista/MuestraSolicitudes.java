@@ -6,6 +6,10 @@
 package vista;
 
 import BaseDeDatos.ConsultasBD;
+import javax.swing.DefaultListModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.basic.BasicListUI;
 
 /**
  *
@@ -21,7 +25,16 @@ public class MuestraSolicitudes extends javax.swing.JFrame {
         txtFie_carrera.setEditable(false);
         txtFie_fecha.setEditable(false);
         txtFie_nomb.setEditable(false);
+        limpiarList();
         llenarJList();
+        jlistSolicituds.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                String actual=jlistSolicituds.getSelectedValue();
+                System.out.println("actual"+actual);
+                txtFiecodSoli.setText(actual);
+            }
+        });
     }
 
     /**
@@ -337,7 +350,21 @@ public class MuestraSolicitudes extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void llenarJList() {
+        DefaultListModel modelo=new DefaultListModel();
        String codigs=consult.devolCodSisSolicitantes();
         System.out.println(codigs);
+        modelo =(DefaultListModel) jlistSolicituds.getModel();
+        modelo.addElement(codigs);
+        
+        
+        
     }
+    
+    private DefaultListModel limpiarList(){
+        DefaultListModel modelo= new DefaultListModel();
+        jlistSolicituds.setModel(modelo);
+        return modelo;
+    }
+    
+    
 }
