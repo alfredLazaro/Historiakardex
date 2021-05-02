@@ -194,6 +194,7 @@ public class LlenadoSolicitud extends javax.swing.JFrame {
         }else if(txtArea_motivo.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Llene el espacio de motivo");
         }else if(txtFie_carrera.getText().equals("")){
+            /* No verifica si carrera esta registrada en bd */
             JOptionPane.showMessageDialog(null, "Llene el espacio de carrera");
         }else{
             try{
@@ -205,7 +206,7 @@ public class LlenadoSolicitud extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Registro realizado exitosamente");
                 vaciarDatos();
             }catch(Exception e){
-                JOptionPane.showMessageDialog(null, "Existen errores en codSis");
+                JOptionPane.showMessageDialog(null,"Error al introducir codSis");
             }
         }
         
