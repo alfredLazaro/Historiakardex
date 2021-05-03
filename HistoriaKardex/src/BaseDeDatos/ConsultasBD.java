@@ -150,12 +150,13 @@ public class ConsultasBD {
             String esta="";
             if(estado==1){
                 esta="esAceptado";
+            }else if(estado==0){
+                esta="noAceptado";
+                
+            }else if(estado==2){
+                esta="enProceso";
             }else{
-                if(estado==0){
-                    esta="noAceptado";
-                }else{
-                    esta="enProceso";
-                }
+                esta="revisado";
             }
             Statement sql=ConexionSQL.getConnetion().createStatement();
             String update=
@@ -208,11 +209,9 @@ public class ConsultasBD {
                 ResultSet resultado = sql.executeQuery(consulta);
                 
                 while(resultado.next()){
-                   
-                    res1.add("nro  gestion  codMat    nombMat      calif" +"\n"
-                            +resultado.getString(1) +"    |"+ resultado.getString(2) 
-                            + "      |"+resultado.getString(3)+"      |"+resultado.getString(4)
-                            +"|"+resultado.getString(5) + "\n");
+                    res1.add( resultado.getString(2) 
+                            + "  |  "+resultado.getString(3)+"  |  "+resultado.getString(4)
+                            + "  |  "+resultado.getString(5));
                     
                 }
                
@@ -246,6 +245,27 @@ public class ConsultasBD {
                 System.out.println(e.toString());
             }
         return res;
+    }
+    
+    public static boolean solicitudEnProc(int codSis){
+        /* Verifica si la solicitud esta en proceso o aceptada para un codSis*/
+        boolean solicito = false;
+        try{
+                Statement sql=ConexionSQL.getConnetion().createStatement();
+                String consulta=
+                "SELECT codSis from Formulario "
+                        + "where esAceptada='enProceso' or esAceptada='esAceptado'"
+                                + "and codSis="+codSis;
+
+                ResultSet resultado = sql.executeQuery(consulta);
+                if(resultado.next()){
+                    solicito = true;
+                }
+                
+            }catch(Exception e){
+                System.out.println(e.toString());
+            }
+        return solicito;
     }
     
     public static ArrayList<String> mostrarSolicitud(int codSis){
