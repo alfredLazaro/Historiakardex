@@ -234,6 +234,7 @@ public class Solicitud extends javax.swing.JFrame {
                     kardex = new VentanaKardex(codS);
                     kardex.setVisible(true);
                 }else{
+                    consulta.eliminarRechazados(codS);
                     llenadoS = new LlenadoSolicitud();
                     llenadoS.setVisible(true);
                 }

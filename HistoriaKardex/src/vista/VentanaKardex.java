@@ -44,7 +44,7 @@ public class VentanaKardex extends javax.swing.JFrame {
 //            modelo.addElement(nueva);
 //        }
 //        return modelo;
-        ArrayList<String> res = conexion.respuestaAlaSolicitud(codSis);
+        ArrayList<String> res = conexion.notasKardex(codSis);
         if(!res.isEmpty()){
             txtFie_estado.setText("Solicitud esta aceptada");
             DefaultListModel modelo = (DefaultListModel) jlNotas.getModel();
@@ -167,7 +167,7 @@ public class VentanaKardex extends javax.swing.JFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         if(txtFie_estado.getText().equals("Solicitud esta aceptada")){
-            conexion.actualizarEstadoFormulario(codSis, 3); /*Actualiza el estado de formulario a revisado*/
+            conexion.eliminarAceptados(codSis); /*Actualiza el estado de formulario a revisado*/
             this.dispose();
         }
     }//GEN-LAST:event_btnAceptarActionPerformed

@@ -264,7 +264,7 @@ public class MuestraSolicitudes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDenegarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDenegarActionPerformed
-       consult.actualizarEstadoFormulario(Integer.parseInt(txtFiecodSoli.getText()), 1);
+       consult.actualizarEstadoFormulario(Integer.parseInt(txtFiecodSoli.getText()), 0);
        removerSol();
         vaciarInfo();
     }//GEN-LAST:event_btnDenegarActionPerformed
