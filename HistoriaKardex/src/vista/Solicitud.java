@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 public class Solicitud extends javax.swing.JFrame {
     ConsultasBD consulta;
     LlenadoSolicitud llenadoS;
+    VentanaKardex kardex;
     public Solicitud() {
         initComponents();
         this.setResizable(false);
@@ -229,8 +230,14 @@ public class Solicitud extends javax.swing.JFrame {
         String contra=String.valueOf(jpswdContra.getPassword());
         if(evt.getSource()==jbtnIngresar){
             if(consulta.validarContraseniaEst(codS, contra) && jchekConfirm.isSelected()){
-                llenadoS=new LlenadoSolicitud();
-                llenadoS.setVisible(true);
+                if(consulta.solicitudEnProc(codS)){
+                    kardex = new VentanaKardex(codS);
+                    kardex.setVisible(true);
+                }else{
+                    consulta.eliminarRechazados(codS);
+                    llenadoS = new LlenadoSolicitud();
+                    llenadoS.setVisible(true);
+                }
                 this.setVisible(false);
             }else{
                 JOptionPane.showMessageDialog(this, "el estudiante no esta registrado");

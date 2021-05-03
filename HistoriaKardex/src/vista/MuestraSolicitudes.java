@@ -264,7 +264,7 @@ public class MuestraSolicitudes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDenegarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDenegarActionPerformed
-       consult.actualizarEstadoFormulario(Integer.parseInt(txtFiecodSoli.getText()), 1);
+       consult.actualizarEstadoFormulario(Integer.parseInt(txtFiecodSoli.getText()), 0);
        removerSol();
         vaciarInfo();
     }//GEN-LAST:event_btnDenegarActionPerformed
@@ -368,7 +368,7 @@ public class MuestraSolicitudes extends javax.swing.JFrame {
 
     private void llenarJList() {
         DefaultListModel modelo=new DefaultListModel();
-       ArrayList<String> codigs=consult.devolCodSisSolicitantes();
+        ArrayList<String> codigs=consult.devolCodSisSolicitantes();
         modelo =(DefaultListModel) jlistSolicituds.getModel();
         for(int i=0;i<codigs.size();i++){
             modelo.addElement(codigs.get(i));

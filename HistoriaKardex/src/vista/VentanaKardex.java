@@ -6,32 +6,56 @@
 package vista;
 
 import javax.swing.DefaultListModel;
+import BaseDeDatos.ConsultasBD;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author USUARIO
  */
 public class VentanaKardex extends javax.swing.JFrame {
-
+    private int codSis = -1;
+    private ConsultasBD conexion = new ConsultasBD();
     /**
      * Creates new form VentanaKardex
      */
     public VentanaKardex() {
         initComponents();
+        txtFie_estado.setEditable(false);
         limpiarJL();
         llenarKardex();
     }
-    public DefaultListModel llenarKardex(){
+    public VentanaKardex(int codSis) {
+        this.codSis = codSis;
+        initComponents();
+        txtFie_estado.setEditable(false);
+        limpiarJL();
+        llenarKardex();
+    }
+    public void llenarKardex(){
         /*
             Llenar las notas del kardex en caso que exista una solicitud aceptada
         */
-        String cad = "cadena";
-        DefaultListModel modelo = (DefaultListModel) jlNotas.getModel();
-        for(int i=0;i<15;i++){
-            String nueva = cad+" "+i;
-            modelo.addElement(nueva);
+//        String cad = "cadena";
+//        DefaultListModel modelo = (DefaultListModel) jlNotas.getModel();
+//        for(int i=0;i<15;i++){
+//            String nueva = cad+" "+i;
+//            modelo.addElement(nueva);
+//        }
+//        return modelo;
+        ArrayList<String> res = conexion.notasKardex(codSis);
+        if(!res.isEmpty()){
+            txtFie_estado.setText("Solicitud esta aceptada");
+            DefaultListModel modelo = (DefaultListModel) jlNotas.getModel();
+            for(String s : res){
+                modelo.addElement(s);
+            }
+        }else{
+            txtFie_estado.setText("Todavia no se reviso su solicitud");
+            JOptionPane.showMessageDialog(null, "No existe respuesta a solicitud");
+            this.dispose();
         }
-        return modelo;
     }
     
     public DefaultListModel limpiarJL(){
@@ -50,19 +74,17 @@ public class VentanaKardex extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        txtFieadmin = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jlNotas = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txtFie_estado = new javax.swing.JTextField();
+        btnAceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
-        jLabel1.setText("Autorizado por: ");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Kardex:");
 
         jScrollPane1.setViewportView(jlNotas);
@@ -70,25 +92,46 @@ public class VentanaKardex extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel3.setText("Informacion de Solicitud");
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("Estado Solicitud:");
+
+        txtFie_estado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFie_estadoActionPerformed(evt);
+            }
+        });
+
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAceptar))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFieadmin, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtFie_estado))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(97, 97, 97)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(97, 97, 97)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -96,19 +139,32 @@ public class VentanaKardex extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
+                .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtFieadmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                    .addComponent(jLabel4)
+                    .addComponent(txtFie_estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jLabel2)
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAceptar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtFie_estadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFie_estadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFie_estadoActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        if(txtFie_estado.getText().equals("Solicitud esta aceptada")){
+            conexion.eliminarAceptados(codSis); /*Actualiza el estado de formulario a revisado*/
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -146,11 +202,12 @@ public class VentanaKardex extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnAceptar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> jlNotas;
-    private javax.swing.JTextField txtFieadmin;
+    private javax.swing.JTextField txtFie_estado;
     // End of variables declaration//GEN-END:variables
 }

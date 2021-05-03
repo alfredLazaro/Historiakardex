@@ -150,12 +150,10 @@ public class ConsultasBD {
             String esta="";
             if(estado==1){
                 esta="esAceptado";
+            }else if(estado==0){
+                esta="noAceptado";
             }else{
-                if(estado==0){
-                    esta="noAceptado";
-                }else{
-                    esta="enProceso";
-                }
+                esta="enProceso";
             }
             Statement sql=ConexionSQL.getConnetion().createStatement();
             String update=
@@ -203,16 +201,14 @@ public class ConsultasBD {
                     + " e.codSis=c.codSis "
                     + " and nomCarrera=(SELECT carrera"
                                     + " FROM Umss.dbo.Formulario where codSis="+codSis +")"
-                   +  "GROUP BY e.codSis,gestion,n.codMat,nombMat,calif; ";
+                   +  "GROUP BY e.codSis,gestion,n.codMat,nom nobMat,calif; ";
                 
                 ResultSet resultado = sql.executeQuery(consulta);
                 
                 while(resultado.next()){
-                   
-                    res1.add("nro  gestion  codMat    nombMat      calif" +"\n"
-                            +resultado.getString(1) +"    |"+ resultado.getString(2) 
-                            + "      |"+resultado.getString(3)+"      |"+resultado.getString(4)
-                            +"|"+resultado.getString(5) + "\n");
+                    res1.add( resultado.getString(2) 
+                            + "  |  "+resultado.getString(3)+"  |  "+resultado.getString(4)
+                            + "  |  "+resultado.getString(5));
                     
                 }
                
@@ -222,6 +218,32 @@ public class ConsultasBD {
         }else{
             res="no puede obtener el Kardex"
                     + "debido a que no fue evaluada su solicitud aun.";
+        }
+        return res1;
+    }
+    /* Devuelve las notas para el kardex en caso de que la solicitud este aceptada */
+    public static ArrayList<String> notasKardex(int codSis){
+       
+        ArrayList<String> res1 = new ArrayList<>();
+        if(consultaEstado(codSis)){
+            try{
+                Statement sql=ConexionSQL.getConnetion().createStatement();
+                String consulta=
+                    "SELECT avg(calif) as promedio,n.codMat,gestion"
+                        + " FROM Umss.dbo.Nota as n,Umss.dbo.Estudiante as e, Umss.dbo.Materia as m"
+                        + " WHERE n.codSis=e.codSis and m.codMat=n.codMat and n.codSis="+codSis
+                        + " GROUP BY n.codMat,n.gestion ";
+		
+                ResultSet resultado = sql.executeQuery(consulta);
+                
+                while(resultado.next()){
+                    res1.add( "Nota: "+ resultado.getString(1) 
+                            + "  |  Cod Materia: "+ resultado.getString(2)+"  |  Gestion: "+resultado.getString(3));
+                }
+            }catch(SQLException e){
+                System.out.println(e.toString());
+            }
+        }else{
         }
         return res1;
     }
@@ -246,6 +268,27 @@ public class ConsultasBD {
                 System.out.println(e.toString());
             }
         return res;
+    }
+    
+    public static boolean solicitudEnProc(int codSis){
+        /* Verifica si la solicitud esta en proceso o aceptada para un codSis*/
+        boolean solicito = false;
+        try{
+                Statement sql=ConexionSQL.getConnetion().createStatement();
+                String consulta=
+                "SELECT codSis from Umss.dbo.Formulario "
+                        + "where (esAceptada='enProceso' or esAceptada='esAceptado') "
+                                + "and codSis="+codSis;
+
+                ResultSet resultado = sql.executeQuery(consulta);
+                if(resultado.next()){
+                    solicito = true;
+                }
+                
+            }catch(Exception e){
+                System.out.println(e.toString());
+            }
+        return solicito;
     }
     
     public static ArrayList<String> mostrarSolicitud(int codSis){
@@ -281,5 +324,31 @@ public class ConsultasBD {
                 System.out.println(e.toString());
             }
         return datos;
+    }
+    public static void eliminarAceptados(int codSis){
+            try{
+                Statement sql=ConexionSQL.getConnetion().createStatement();
+                String elimina="DELETE FROM Umss.dbo.Formulario "
+                                + "where esAceptada LIKE 'esAceptado' "
+                                + "and codSis="+codSis;
+
+                sql.execute(elimina);
+                
+            }catch(Exception e){
+                System.out.println(e.toString());
+            }
+    }
+    public static void eliminarRechazados(int codSis){
+            try{
+                Statement sql=ConexionSQL.getConnetion().createStatement();
+                String elimina="DELETE FROM Umss.dbo.Formulario "
+                                + "where esAceptada LIKE 'noAceptado' "
+                                + "and codSis="+codSis;
+
+                sql.execute(elimina);
+                
+            }catch(Exception e){
+                System.out.println(e.toString());
+            }
     }
 }

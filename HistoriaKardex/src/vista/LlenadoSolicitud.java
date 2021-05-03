@@ -199,15 +199,22 @@ public class LlenadoSolicitud extends javax.swing.JFrame {
         }else{
             try{
                 codSis = Integer.parseInt(txtFie_codSis.getText());
-                motivo = txtArea_motivo.getText();
-                carrera = txtFie_carrera.getText();
-                estado = "enProceso";
-                conexion.registroDeNuevaSolicitud(codSis, motivo, fecha, carrera, estado);
-                JOptionPane.showMessageDialog(null, "Registro realizado exitosamente");
-                vaciarDatos();
+                if(!conexion.solicitudEnProc(codSis)){
+                    motivo = txtArea_motivo.getText();
+                    carrera = txtFie_carrera.getText();
+                    estado = "enProceso";
+                    conexion.registroDeNuevaSolicitud(codSis, motivo, fecha, carrera, estado);
+                    JOptionPane.showMessageDialog(null, "Registro realizado exitosamente");
+                    vaciarDatos();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Ya tiene una solicitud registrada");
+                }
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null,"Error al introducir codSis");
             }
+            codSis = Integer.parseInt(txtFie_codSis.getText());
+            
+            
         }
         
         

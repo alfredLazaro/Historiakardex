@@ -3,10 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/USUARIO/Desktop/misArchivos/Materias/Sis2/tareas/1P/proyectoSprint/HitoriaKardex/Historiakardex/HistoriaKardex/src/BaseDeDatos/ConsultasBD.java</file>
             <file>file:/C:/Users/USUARIO/Desktop/misArchivos/Materias/Sis2/tareas/1P/proyectoSprint/HitoriaKardex/Historiakardex/HistoriaKardex/src/BDKardex/prueba.sql</file>
             <file>file:/C:/Users/USUARIO/Desktop/misArchivos/Materias/Sis2/tareas/1P/proyectoSprint/HitoriaKardex/Historiakardex/HistoriaKardex/src/vista/LlenadoSolicitud.java</file>
             <file>file:/C:/Users/USUARIO/Desktop/misArchivos/Materias/Sis2/tareas/1P/proyectoSprint/HitoriaKardex/Historiakardex/HistoriaKardex/src/vista/MuestraSolicitudes.java</file>
+=======
+            <file>file:/D:/Mauricio/UNIVERSIDAD/Sprint/Historiakardex/HistoriaKardex/src/vista/Solicitud.java</file>
+            <file>file:/D:/Mauricio/UNIVERSIDAD/Sprint/Historiakardex/HistoriaKardex/src/BaseDeDatos/ConexionSQL.java</file>
+            <file>file:/D:/Mauricio/UNIVERSIDAD/Sprint/Historiakardex/HistoriaKardex/src/BaseDeDatos/ConsultasBD.java</file>
+            <file>file:/D:/Mauricio/UNIVERSIDAD/Sprint/Historiakardex/HistoriaKardex/src/vista/IngresoPrincipal.java</file>
+            <file>file:/D:/Mauricio/UNIVERSIDAD/Sprint/Historiakardex/HistoriaKardex/src/vista/InsgresoAdmin.java</file>
+            <file>file:/D:/Mauricio/UNIVERSIDAD/Sprint/Historiakardex/HistoriaKardex/src/vista/LlenadoSolicitud.java</file>
+            <file>file:/D:/Mauricio/UNIVERSIDAD/Sprint/Historiakardex/HistoriaKardex/src/vista/MuestraSolicitudes.java</file>
+            <file>file:/D:/Mauricio/UNIVERSIDAD/Sprint/Historiakardex/HistoriaKardex/src/vista/VentanaKardex.java</file>
+>>>>>>> 11acdbc551941ca8ada1ed2fc494ef56d892420a
         </group>
     </open-files>
 </project-private>
