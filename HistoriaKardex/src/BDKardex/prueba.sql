@@ -153,10 +153,20 @@ CREATE TABLE Formulario(
  [esAceptada] char (50),
 
  constraint FK_Formulario_CODSIS foreign key(codSis) references estudiante (codSis)
-
 )
 select * from formulario
 select codSis from Formulario
+
+select motivo,nomEst,apPat,apMat,fechRegist,nomCarrera 
+from Formulario as f,Estudiante as e,carrera c
+where f.codSis=e.codSis and c.codSis=f.codSis and carrera=( 
+	select carrera 
+	from formulario 
+	where
+    codSis=200022009)
+
+
+
 
 IF EXISTS(SELECT 1 FROM sys.tables WHERE object_id = OBJECT_ID('carrera'))
 BEGIN;
